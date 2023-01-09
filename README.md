@@ -97,8 +97,8 @@
 - dst : destination (목적지)
 - src : source
 - base : 베이스 레지스터
-- offset : 정수
-
+- offset : 기준 주소에서 얼마큼 떨어진 주소를 가르킬때 쓰는 말
+- op : operation
 
 # Mission. CPU 시뮬레이터
 - offset.reg = 레지스터값+레지스터값
