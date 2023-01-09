@@ -93,6 +93,13 @@
 - 코어가 많아지면 속도는 더 빨라진다.
 - 프로세서의 구조(아키텍쳐)는 회사마다 다르다.
 ---
+## 용어
+- dst : destination (목적지)
+- src : source
+- base : 베이스 레지스터
+- offset : 정수
+
+
 # Mission. CPU 시뮬레이터
 - offset.reg = 레지스터값+레지스터값
 - offset.value = 레지스터값 + 특정값
