@@ -1,54 +1,54 @@
+import java.util.HashMap;
+
 public class CPU {
-    String instruction;
-    String bitArr;
+    String bitcode(String[] input) {
+        switch (input[1]) {//4bit instruction
+            case "0001"://LOAD
 
-    String bitcode (String[] input){
-        if(input[1].equals("0001")){
+                break;
+            case "0010"://LOAD
+
+                break;
+            case "0011"://STORE
+
+                break;
+            case "0100"://STORE
+
+                break;
+            case "0101"://AND
+
+                break;
+            case "0110"://OR
+
+                break;
+            case "0111"://ADD
+
+                break;
+            case "1000"://ADD
+
+                break;
+            case "1001"://SUB
+
+                break;
+            case "1010"://SUB
+
+                break;
+            case "1011"://MOV
+
+                break;
+
 
         }
-        else if(input[1].equals("0010")){
+    }
+    String register(String[] input) {
+        String PC;
+        HashMap<String, String> register = new HashMap<>();//regist 3bit : ? 구조
 
-        }
-        if(input[1].equals("0011")){
+        return "";
+    }
 
-        }
-        if(input[1].equals("0100")){
-
-        }
-        if(input[1].equals("0101")){
-
-        }
-        if(input[1].equals("0110")){
-
-        }
-        if(input[1].equals("0111")){
-
-        }
+    String ALU (String A, String B) {
 
     }
 
-
-    int register;
-
-    int fetch() {//현재 PC 값에 해당하는 메모리에서 프로그램 명령어를 가져와서 리턴, PC카운트 1증가
-
-        return 2 ;
-    }
-
-
-    void decode() {
-
-    }
-
-    void execute() {
-
-    }
-
-    void reset() {
-
-    }
-
-    void dump() {
-
-    }
 }

@@ -6,11 +6,14 @@ import java.util.HashMap;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        HashMap<String, String> register = new HashMap<>();//regist 3bit : ? 구조
         HashMap<String, String> memory = new HashMap<>();//메모리주소 : 메모리값 해시맵
+        HashMap<String, String> register = new HashMap<>();
+        CPU cpu = new CPU();
+        while (true) {
+            String[] input = br.readLine().split(" ");
+            memory.put(input[0], cpu.bitcode(input));
 
-        String[] input = br.readLine().split(" ");
-
+        }
 
 
 //            switch (input[1]) {//메모리주소 - instruction - reg~
