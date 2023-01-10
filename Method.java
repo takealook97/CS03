@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Method {
 
     int fetch() {//현재 PC 값에 해당하는 메모리에서 프로그램 명령어를 가져와서 리턴, PC카운트 1증가

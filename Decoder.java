@@ -1,26 +1,26 @@
 import java.util.HashMap;
 
 public class Decoder {
-    String[] decode(String[] input) {
-        switch (input[0]) {
-            case "0001", "0011", "0101", "0110", "0111", "1001" -> {
-                String[] decode = {instDecode(input[0]), regDecode(input[1]),
-                        regDecode(input[2]), regDecode(input[4])};
-                return decode;
-            }
-            case "0010", "0100", "1000", "1010" -> {
-                String[] decode = {instDecode(input[0]), regDecode(input[1]),
-                        regDecode(input[2]), valDecode(input[4])};
-                return decode;
-            }
-            case "1011" -> {
-                String[] decode = {instDecode(input[0]), regDecode(input[1]),
-                        valDecode(input[2])};
-                return decode;
-            }
-        }
-        return input;
-    }
+//    String[] decode(String[] input) {
+//        switch (input[0]) {
+//            case "0001", "0011", "0101", "0110", "0111", "1001" -> {
+//                String[] decode = {instDecode(input[0]), regDecode(input[1]),
+//                        regDecode(input[2]), regDecode(input[4])};
+//                return decode;
+//            }
+//            case "0010", "0100", "1000", "1010" -> {
+//                String[] decode = {instDecode(input[0]), regDecode(input[1]),
+//                        regDecode(input[2]), valDecode(input[4])};
+//                return decode;
+//            }
+//            case "1011" -> {
+//                String[] decode = {instDecode(input[0]), regDecode(input[1]),
+//                        valDecode(input[2])};
+//                return decode;
+//            }
+//        }
+//        return input;
+//    }
 
     String instDecode(String input) {
         HashMap<String, String> instruction = new HashMap<>();
@@ -50,8 +50,8 @@ public class Decoder {
         return registry.get(input);
     }
 
-    String valDecode(String input) {
-        return Integer.toString(Integer.parseInt(input, 2));
+    int valDecode(String input) {
+        return Integer.parseInt(input, 2);
     }
 
 }
