@@ -5,42 +5,48 @@ public class Register {
     int memoryAddress;
     String registerIn;
     int registerOut;
+    static HashMap<String, Integer> registerMap = new HashMap<>();//레지스터위치값 : 임시로올릴값 (정수만 올릴수있다)
 
     void onRegister(String[] input) {//레지스터에는 001과 같은 레지스터의 위치값
         Memory Memory = new Memory();
         ALU ALU = new ALU();
-        Decoder Decoder = new Decoder();
-        HashMap<String, Integer> register = new HashMap<>();//레지스터위치값 : 임시로올릴값 (정수만 올릴수있다)
-        register.put("001", 0);
-        register.put("010", 0);
-        register.put("011", 0);
-        register.put("100", 0);
-        register.put("101", 0);
-        register.put("110", 0);
-        register.put("111", 0);
+
         switch (input[0]) {
             case "0001"://LOAD_R
-                memoryAddress = ALU.ADD(register.get(input[2]), register.get(input[4]));//base.Reg + offset.Reg
+                memoryAddress = ALU.ADD(registerMap.get(input[2]), registerMap.get(input[4]));//base.Reg + offset.Reg
                 registerIn = Memory.MemoryIntegerInput(memoryAddress);
-                register.put(input[1], Integer.parseInt(registerIn));//dst.Reg에 정수형으로 올림
+                registerMap.put(input[1], Integer.parseInt(registerIn));//dst.Reg에 정수형으로 올림
                 break;
             case "0010"://LOAD_V
-                memoryAddress = ALU.ADD(register.get(input[2]), Decoder.valDecode(input[4]));//base.Reg + offset.Reg
+                memoryAddress = ALU.ADD(registerMap.get(input[2]), Integer.parseInt(input[4], 2));//base.Reg + offset.Reg
                 registerIn = Memory.MemoryIntegerInput(memoryAddress);
-                register.put(input[1], Integer.parseInt(registerIn));//dst.Reg에 정수형으로 올림
+                registerMap.put(input[1], Integer.parseInt(registerIn));//dst.Reg에 정수형으로 올림
                 break;
             case "0011"://STORE_R
-                memoryAddress = ALU.ADD(register.get(input[2]), register.get(input[4]));//base.Reg + offset.Reg
-                registerOut = register.get(input[1]);
+                memoryAddress = ALU.ADD(registerMap.get(input[2]), registerMap.get(input[4]));//base.Reg + offset.Reg
+                registerOut = registerMap.get(input[1]);
                 Memory.MemoryStringInput(Integer.toString(memoryAddress), Integer.toString(registerOut));
                 break;
             case "0100"://STORE_V
-
+                memoryAddress = ALU.ADD(registerMap.get(input[2]), Integer.parseInt(input[4], 2));//base.Reg + offset.Reg
+                registerOut = registerMap.get(input[1]);
+                Memory.MemoryStringInput(Integer.toString(memoryAddress), Integer.toString(registerOut));
                 break;
+            case "0101"://AND
+                registerMap.put(input[1], ALU.AND(registerMap.get(input[2]), registerMap.get(input[4])));
+            case "0110"://OR
+                registerMap.put(input[1], ALU.OR(registerMap.get(input[2]), registerMap.get(input[4])));
+            case "0111"://AND_R
+                registerMap.put(input[1], ALU.ADD(registerMap.get(input[2]), registerMap.get(input[4])));
+            case "1000"://AND_V
+                registerMap.put(input[1], ALU.ADD(registerMap.get(input[2]), Integer.parseInt(input[4], 2)));
+            case "1001"://SUB_R
+                registerMap.put(input[1], ALU.SUB(registerMap.get(input[2]), registerMap.get(input[4])));
+            case "1010"://SUB_V
+                registerMap.put(input[1], ALU.SUB(registerMap.get(input[2]), Integer.parseInt(input[4], 2)));
             case "1011"://MOV
-                register.put(input[1], Decoder.valDecode(input[2]));
+                registerMap.put(input[1], Integer.parseInt(input[2], 2));
                 break;
-
         }
     }
 }
