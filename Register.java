@@ -30,12 +30,12 @@ public class Register {
             case "0011"://STORE_R
                 memoryAddress = ALU.ADD(registerMap.get(input[2]), registerMap.get(input[4]));//base.Reg + offset.Reg
                 registerOut = registerMap.get(input[1]);
-                Memory.MemoryStringInput(Integer.toString(memoryAddress), Integer.toString(registerOut));//?????
+                Memory.MemoryStringsInput(Integer.toString(memoryAddress), Integer.toString(registerOut));//?????
                 break;
             case "0100"://STORE_V
                 memoryAddress = ALU.ADD(registerMap.get(input[2]), Integer.parseInt(input[4], 2));//base.Reg + offset.Reg
                 registerOut = registerMap.get(input[1]);
-                Memory.MemoryStringInput(Integer.toString(memoryAddress), Integer.toString(registerOut));
+                Memory.MemoryStringsInput(Integer.toString(memoryAddress), Integer.toString(registerOut));
                 break;
             case "0101"://AND
                 registerMap.put(input[1], (ALU.AND(registerMap.get(input[2]), registerMap.get(input[4]))));

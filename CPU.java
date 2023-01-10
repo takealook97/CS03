@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class CPU {//todo 메모리에 명령어도 다 올라가야 한다
+public class CPU {
 
     public static void main(String[] args) throws IOException {
         Command Command = new Command();
@@ -36,10 +36,10 @@ public class CPU {//todo 메모리에 명령어도 다 올라가야 한다
                         reset();
                         break;
                     case "fetch":
-                        fetch();
-                        break;
-                    case "execute":
-                        execute();
+                        String order = fetch();
+                        Memory.num += 16;
+                        Register.PC = "0x00" + Integer.toHexString(Memory.num);//다음에 수행해야 할 명령어 주소 PC에 저장
+                        execute(input);
                         break;
                     case "dump":
                         dump();
@@ -57,16 +57,14 @@ public class CPU {//todo 메모리에 명령어도 다 올라가야 한다
 
     //--------------------------------------------------------------------------------------------
     static Register Register = new Register();//레지스터 틀
-    Memory Memory = new Memory();
+    static Memory Memory = new Memory();
 
-    static void fetch() {
-        System.out.println(Register.PC);//현재 PC 값에 해당하는 메모리에서 프로그램 명령어를 가져와서 리턴
-//        execute(Register.PC);//fetch에서 리턴한 명령을 execute에 넘겨준다
-        Register.PC += 1;//PC 카운트를 +1 증가
+    static String fetch() {
+        return Memory.getMemoryMapVal(Register.PC);
     }
 
-    static void execute() { //어떤 명령인지 분석해서 계산하거나 처리
-
+    static void execute(String[] order) { //어떤 명령인지 분석해서 계산하거나 처리
+        Register.onRegister(order);
     }
 
     static void reset() {//레지스터 값을 모두 지우고, PC 값도 0으로 초기화

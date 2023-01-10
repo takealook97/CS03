@@ -1,7 +1,6 @@
-import java.util.Arrays;
 import java.util.HashMap;
 
-public class Memory {
+public class Memory {//todo 메모리에 명령어도 다 올라가야 한다
     static int num;
     static HashMap<String, String> memoryMap = new HashMap<>();//메모리주소 : 메모리값 해시맵
 
@@ -20,21 +19,19 @@ public class Memory {
             second += bitcode.charAt(i);
         }
 
-        memoryMap.put("0x00" + Integer.toHexString(num), first);//메모리에 비트코드 명령 올리기
-        memoryMap.put("0x00" + Integer.toHexString(num++), second);//메모리에 비트코드 명령 올리기
-        num++;
-        Register.PC = "0x00" + Integer.toHexString(num);//다음에 수행해야 할 명령어 주소 PC에 저장
+        memoryMap.put("0x00" + Integer.toHexString(num), first + second);//메모리에 비트코드 명령 올리기
 
-//        num = ALU.ADD(num, 0x0010);
-//        Register.PC = "0x00" + Integer.toHexString(num);//PC에 다음 메모리 주소 저장
     }
 
-    void MemoryStringInput(String address, String value) {
+    void MemoryStringsInput(String address, String value) {
         memoryMap.put(address, value);
     }
 
     String MemoryIntegerOutput(int input) {
         String Num2HexString = "0x00" + Integer.toHexString(input);
         return memoryMap.get(Num2HexString);
+    }
+    String getMemoryMapVal(String input){//fetch 할 때 메모리 맵에서 get
+        return memoryMap.get(input);
     }
 }
