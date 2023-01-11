@@ -9,6 +9,6 @@ public class Command {
         System.out.println("| 0x0040b SUB R3, R1, R2   | -> |     0x0040     | 1001 011 001 000 010 |");
         System.out.println("| 0x0050b STORE R3, R4, #4 | -> |     0x0050     | 0100 011 100 1 00100 |");
         System.out.println("|__________________________|____|________________|______________________|");
-        System.out.println("INPUT COMMAND (16bit) / OR METHOD");
+        System.out.println("Input command(16bit) and type 'fetch' to get the command from memory");
     }
 }

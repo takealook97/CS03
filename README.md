@@ -99,9 +99,11 @@
 - base : 베이스 레지스터
 - offset : 기준 주소에서 얼마큼 떨어진 주소를 가르킬때 쓰는 말
 - op : operation
-
+---
 # Mission. CPU 시뮬레이터
-- offset.reg = 레지스터값+레지스터값
-- offset.value = 레지스터값 + 특정값
-- 레지스터에 값이 올라간 뒤 메모리에 값이 올라간다
+## 명령 로직
   ![스크린샷 2023-01-11 오전 8 47 14](https://user-images.githubusercontent.com/118447769/211685909-d1773830-6ab0-4195-85d4-7b7e64f165d3.png)
+---
+## 구현 이미지
+  ![스크린샷 2023-01-12 오전 6 29 49](https://user-images.githubusercontent.com/118447769/211922086-1a5781a4-2fd8-4630-95dc-f5579668684d.png)
+

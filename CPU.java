@@ -1,12 +1,14 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class CPU {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        for (int i = 0; i <= 162; i++) {//메모리 틀
-            Memory.memoryMap.put("0x00" + Integer.toHexString(i), "0");
+        for (int i = 0; i < 16; i++) {//메모리 틀
+            Memory.memoryMap.put("0x000" + Integer.toHexString(i), null);
+        }
+        for (int i = 16; i <= 162; i++) {
+            Memory.memoryMap.put("0x00" + Integer.toHexString(i), null);
         }
 
         Register.registerMap.put("001", 0);//레지스터 틀
@@ -19,27 +21,28 @@ public class CPU {
 
         new Command().commandList();//명령어 리스트 출력
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        if (Register.PC == null) {
+            Register.PC = "0x00000";
+        }
         out:
         while (true) {
             System.out.print("> ");
-            String[] input = br.readLine().split(" ");
-            if (input.length > 1) {
-//                new Register().putOnRegister(input);
-                Memory.putCmdOnMemory(input);//명령을 메모리에 올려기
-                Register.inputArr = input;
-            } else if (input.length == 1) {
-                switch (input[0]) {
+            String input = sc.nextLine();
+            if (input.length() > 16) {
+                new Memory().putCmdOnMemory(input);//명령을 메모리에 올려기
+            } else if (input.length() < 6) {
+                switch (input) {
                     case "reset":
-                        reset();
+                        new CPU().reset();
                         break;
                     case "fetch":
-                        new CPU().execute(new CPU().fetch());//메모리에서 프로그램 명령어를 가져와서 리턴 후 execute
+                        String order = new CPU().fetch(Register.PC);//메모리에서 프로그램 명령어를 가져와서 리턴
                         Memory.num += 16;
                         Register.PC = "0x00" + Integer.toHexString(Memory.num);//PC카운트 1증가
+                        new CPU().execute(order);// 리턴 후 execute
                         break;
                     case "dump":
-                        dump();
+                        new CPU().dump();
                         break;
                     case "close":
                         System.out.println("---end---");
@@ -53,17 +56,15 @@ public class CPU {
     }
 
     //--------------------------------------------------------------------------------------------
-
-
-    String fetch() {
-        return new Memory().getMemoryMapVal(Register.PC);
+    String fetch(String pc) {
+        return new Memory().getMemoryMapVal(pc);
     }
 
     void execute(String order) { //어떤 명령인지 분석해서 계산하거나 처리
         new Register().putOnRegister(order);
     }
 
-    static void reset() {//레지스터 값을 모두 지우고, PC 값도 0으로 초기화
+    void reset() {//레지스터 값을 모두 지우고, PC 값도 0으로 초기화
         Register.registerMap.put("001", 0);
         Register.registerMap.put("010", 0);
         Register.registerMap.put("011", 0);
@@ -74,7 +75,7 @@ public class CPU {
         Register.PC = Integer.toString(0);
     }
 
-    static void dump() {//레지스터들 값을 배열에 넣어서 리턴한다.
+    void dump() {//레지스터들 값을 배열에 넣어서 리턴한다.
         System.out.println("R1" + ":" + Register.registerMap.get("001"));
         System.out.println("R2" + ":" + Register.registerMap.get("010"));
         System.out.println("R3" + ":" + Register.registerMap.get("011"));
