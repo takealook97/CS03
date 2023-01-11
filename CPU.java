@@ -3,17 +3,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class CPU {
-
     public static void main(String[] args) throws IOException {
-        Command Command = new Command();
 
-        Memory Memory = new Memory();
-        for (int i = 0; i <= 162; i++) {
-            Memory.memoryMap.put("0x00" + Integer.toHexString(i), "0");//메모리틀
+        for (int i = 0; i <= 162; i++) {//메모리 틀
+            Memory.memoryMap.put("0x00" + Integer.toHexString(i), "0");
         }
 
-        Register Register = new Register();//레지스터 틀
-        Register.registerMap.put("001", 0);
+        Register.registerMap.put("001", 0);//레지스터 틀
         Register.registerMap.put("010", 0);
         Register.registerMap.put("011", 0);
         Register.registerMap.put("100", 0);
@@ -21,7 +17,7 @@ public class CPU {
         Register.registerMap.put("110", 0);
         Register.registerMap.put("111", 0);
 
-        Command.commandList();//명령어 리스트 출력
+        new Command().commandList();//명령어 리스트 출력
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         out:
@@ -29,17 +25,18 @@ public class CPU {
             System.out.print("> ");
             String[] input = br.readLine().split(" ");
             if (input.length > 1) {
-                Register.onRegister(input);
+//                new Register().putOnRegister(input);
+                Memory.putCmdOnMemory(input);//명령을 메모리에 올려기
+                Register.inputArr = input;
             } else if (input.length == 1) {
                 switch (input[0]) {
                     case "reset":
                         reset();
                         break;
                     case "fetch":
-                        String order = fetch();
+                        new CPU().execute(new CPU().fetch());//메모리에서 프로그램 명령어를 가져와서 리턴 후 execute
                         Memory.num += 16;
-                        Register.PC = "0x00" + Integer.toHexString(Memory.num);//다음에 수행해야 할 명령어 주소 PC에 저장
-                        execute(input);
+                        Register.PC = "0x00" + Integer.toHexString(Memory.num);//PC카운트 1증가
                         break;
                     case "dump":
                         dump();
@@ -56,15 +53,14 @@ public class CPU {
     }
 
     //--------------------------------------------------------------------------------------------
-    static Register Register = new Register();//레지스터 틀
-    static Memory Memory = new Memory();
 
-    static String fetch() {
-        return Memory.getMemoryMapVal(Register.PC);
+
+    String fetch() {
+        return new Memory().getMemoryMapVal(Register.PC);
     }
 
-    static void execute(String[] order) { //어떤 명령인지 분석해서 계산하거나 처리
-        Register.onRegister(order);
+    void execute(String order) { //어떤 명령인지 분석해서 계산하거나 처리
+        new Register().putOnRegister(order);
     }
 
     static void reset() {//레지스터 값을 모두 지우고, PC 값도 0으로 초기화

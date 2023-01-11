@@ -4,8 +4,7 @@ public class Memory {//todo 메모리에 명령어도 다 올라가야 한다
     static int num;
     static HashMap<String, String> memoryMap = new HashMap<>();//메모리주소 : 메모리값 해시맵
 
-    static void MemoryArrayInput(String[] input) {//넣을수도, 읽어올수도 있어야한다
-        Register Register = new Register();
+    static void putCmdOnMemory(String[] input) {
         String bitcode = "";
         for (int i = 0; i < input.length; i++) {
             bitcode += input[i];//배열을 합쳐서 16자리 비트코드로 만든다
@@ -23,15 +22,16 @@ public class Memory {//todo 메모리에 명령어도 다 올라가야 한다
 
     }
 
-    void MemoryStringsInput(String address, String value) {
+    void putOnMemory(String address, String value) {
         memoryMap.put(address, value);
     }
 
-    String MemoryIntegerOutput(int input) {
+    String getMemoryMapVal(int input) {
         String Num2HexString = "0x00" + Integer.toHexString(input);
         return memoryMap.get(Num2HexString);
     }
-    String getMemoryMapVal(String input){//fetch 할 때 메모리 맵에서 get
+
+    String getMemoryMapVal(String input) {//fetch 할 때 메모리 맵에서 get
         return memoryMap.get(input);
     }
 }
